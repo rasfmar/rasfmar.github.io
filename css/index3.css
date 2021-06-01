@@ -1,0 +1,95 @@
+body {
+  background-color: #008080;
+  color: #fff;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+/*
+body * {
+  cursor: url("../img/cursor.png"), auto !important;
+}
+*/
+
+.welcome-window {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+.menu-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.menu-bar .window-body {
+  margin: 0;
+}
+
+.menu-bar button {
+  font-size: 12px;
+  min-width: 0px;
+  padding: 0 6px;
+}
+
+.menu-bar img {
+  height: 18px;
+  vertical-align: middle;
+  margin-bottom: 3.75px;
+}
+
+.folder {
+  display: inline-block;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+}
+
+.folder button {
+  display: inline-block;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  font-family: "Pixelated MS Sans Serif", Arial;
+  color: #fff;
+  text-align: center;
+  background: none;
+  box-shadow: none;
+  min-width: unset;
+  min-height: unset;
+  padding: unset;
+}
+
+.folder:not(.disabled):active {
+  background: none;
+  box-shadow: none;
+  min-width: unset;
+  min-height: unset;
+  padding: unset;
+}
+
+.folder:not(.disabled):active span {
+  background: #000080;
+}
+
+.folder:not(.disabled):focus {
+  outline: none;
+}
+
+.folder:not(.disabled):focus span {
+  background: #000080;
+  outline: 1px dotted #000000;
+}
+
+.folder span {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 2px 3px;
+  cursor: auto;
+}

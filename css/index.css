@@ -1,0 +1,260 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600;700&display=swap');
+
+::-moz-selection { background: #cde9e1; }
+::selection { background: #cde9e1; }
+
+body {
+  font-family: 'Montserrat', sans-serif !important;
+  overflow-x: hidden;
+  max-width: 100%;
+  background: url("../img/dot.svg");
+  background-size: 16px 2px;
+  background-position: 0;
+  scroll-behavior: smooth;
+}
+
+h1 {
+  font-weight: 700 !important;
+  font-size: 2em !important;
+  letter-spacing: -1px !important;
+}
+
+h2, h3 {
+  font-weight: 600 !important;
+}
+
+p, a.main-link {
+  line-height: 1.8;
+  font-size: 1em;
+}
+
+@media (min-width: 992px) {
+  body {
+    cursor: none;
+  }
+
+  h1 {
+    font-size: 3em !important;
+    letter-spacing: -2px !important;
+  }
+
+  p, a.main-link {
+    line-height: 2;
+    font-size: 1.2em;
+  }
+}
+
+a[href] {
+  color: #212529;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0,1,1,1);
+}
+
+a[href]:hover {
+  color: #212529;
+  cursor: none;
+}
+
+a[href] h2 span {
+  display: inline-block;
+  transform: translateX(-10px) translateY(2px) scale(0.75);
+  animation: arrow-point 2s infinite alternate ease-in-out;
+}
+
+@keyframes arrow-point {
+  from { transform: translateX(-10px) translateY(2px) scale(0.75); }
+  to { transform: translateX(-5px) translateY(2px) scale(0.75); }
+}
+
+a.main-link {
+  position: relative;
+  display: inline-block;
+}
+
+a.main-link::after {
+  content: " ";
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: 5px;
+  height: 1px;
+  width: 100%;
+  background: #000;
+  transition: all .3s ease;
+  opacity: .75;
+}
+
+@media (min-width: 992px) {
+  a.main-link::after {
+    bottom: 7px;
+  }
+}
+
+a.main-link:hover::after,
+a.main-link:focus::after,
+a.main-link:active::after {
+  width: 8px;
+}
+
+
+.circle {
+  min-width: 50px;
+  min-height: 50px;
+  border-radius: 50%;
+  position: absolute;
+  /* animation: circle-bounce 2s infinite ease-in-out alternate; */
+}
+
+.pfp {
+  display: inline-block;
+  width: 200px;
+  height: 200px;
+  background-image: url("../img/marcus.png");
+  background-size: cover;
+  background-position: 100% center;
+  border-radius: 50%;
+  perspective: 400px;
+  border: 4px solid #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  /* animation: pfp-spin linear 8s infinite; */
+  /* animation: circle-bounce 2s infinite alternate ease-in-out; */
+}
+
+.chevron img {
+  height: 3em;
+  transform: translateY(5em);
+  animation: chevron-bounce 2s infinite ease-in-out alternate;
+}
+
+.org-logo {
+  filter: grayscale(100%);
+  height: 30px;
+  transition: all 0.6s cubic-bezier(0,1,1,1);
+}
+
+.org-logo:hover {
+  filter: grayscale(0%);
+}
+
+.award {
+  color: #F2BE49;
+  font-weight: 600;
+}
+
+.award::before {
+  content: "🏆 ";
+}
+
+@keyframes chevron-bounce {
+  from { transform: translateY(5em); }
+  to { transform: translateY(8em); }
+}
+
+@keyframes circle-bounce {
+  from { transform: translateY(0.25em); }
+  to { transform: translateY(-0.25em); }
+}
+
+/*
+@keyframes pfp-spin {
+  from { transform: rotate3d(0, 1, 0, 0deg); }
+  to { transform: rotate3d(0, 1, 0, 360deg); }
+}
+*/
+
+#main-content-container {
+  min-height: 600px;
+  height: 100vh;
+}
+
+.main-content {
+  padding-top: 0;
+}
+
+@media (min-width: 576px) {
+  .main-content {
+    padding-top: 10vh;
+  }
+}
+
+@media (min-width: 992px) {
+
+  .main-content {
+    padding-top: 25vh;
+  }
+}
+
+.cs-50 { width: 50px; height: 50px; }
+.cs-100 { width: 100px; height: 100px; }
+.cs-150 { width: 150px; height: 150px; }
+.cs-200 { width: 200px; height: 200px; }
+.cs-250 { width: 250px; height: 250px; }
+.cs-300 { width: 300px; height: 300px; }
+.cs-350 { width: 350px; height: 350px; }
+.cs-400 { width: 400px; height: 400px; }
+.cs-450 { width: 450px; height: 450px; }
+.cs-500 { width: 500px; height: 500px; }
+.cs-green { background-color: #90CFBC; }
+.cs-grey { background-color: #D9D9D9; }
+
+/*
+.zi-1 { z-index: -1; }
+.zi-2 { z-index: -2; }
+.zi-3 { z-index: -3; }
+.zi-4 { z-index: -4; }
+.cad-10 { animation-duration: 1.0s; }
+.cad-15 { animation-duration: 1.5s; }
+.cad-20 { animation-duration: 2.0s; }
+.cad-25 { animation-duration: 2.5s; }
+.cad-30 { animation-duration: 3.0s; }
+.cad-35 { animation-duration: 3.5s; }
+.cad-40 { animation-duration: 4.0s; }
+
+#background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  z-index: -999;
+}
+*/
+
+body > div[class*='kursor'].kursor--4 {
+  border: 2px solid rgba(var(--k-color), 0.5);
+  transition: all 0.2s ease, top 0.36s cubic-bezier(0,1,1,1), left 0.36s cubic-bezier(0,1,1,1);
+}
+
+[data-aos="short-fade-up"] {
+  opacity: 0;
+  transform: translateY(20px);
+  transition-property: transform, opacity;
+}
+
+[data-aos="short-fade-up"].aos-animate {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+[data-aos="short-fade-down"] {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition-property: transform, opacity;
+}
+
+[data-aos="short-fade-down"].aos-animate {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+[data-aos="short-fade-right"] {
+  opacity: 0;
+  transform: translateX(-20px);
+  transition-property: transform, opacity;
+}
+
+[data-aos="short-fade-right"].aos-animate {
+  transform: translateX(0);
+  opacity: 1;
+}

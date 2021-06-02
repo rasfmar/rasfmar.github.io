@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+    <link rel="stylesheet" href="../css/simple.css" />
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <title>Subpixel Monitor</title>
+  </head>
+  <body>
+    <div class="container px-lg-5 my-5">
+      <div class="row">
+        <div class="col">
+          <h1>Subpixel Monitor</h1>
+          <p class="mb-5">Press A, S, and D to toggle the red, green, and blue subpixels respectively. I made this when I learned about subpixels and wanted to emulate their behavior on old screens. I found it interesting that there are no other colors besides red, green, and blue on the canvas, but you are still able to perceive any combination of those colors.</p>
+          <div id="canvas-container"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/p5.min.js"></script>
+    <script>
+      var pixelSize = 6;
+      var pixelAmount = 60;
+      var pixelRed;
+      var pixelGreen;
+      var pixelBlue;
+      var pixelBlack;
+      var redOn = true;
+      var greenOn = true;
+      var blueOn = true;
+
+      function setup() {
+        var canv = createCanvas(pixelAmount * pixelSize, pixelAmount * pixelSize);
+        canv.parent("canvas-container");
+        pixelRed = color(255, 0, 0);
+        pixelGreen = color(0, 255, 0);
+        pixelBlue = color(0, 0, 255);
+        pixelBlack = color(0, 0, 0);
+      }
+
+      function getSubPixelColor(x) {
+        x %= pixelSize;
+        if (x < (pixelSize / 3)) {
+          return redOn ? pixelRed : pixelBlack;
+        } else if (x < (2 * pixelSize / 3)) {
+          return greenOn ? pixelGreen : pixelBlack;
+        } else {
+          return blueOn ? pixelBlue : pixelBlack;
+        }
+      }
+
+      function drawPixel(x, y) {
+        for (var i = x; i < x + pixelSize; ++i) {
+          for (var j = y; j < y + pixelSize; ++j) {
+            set(i, j, getSubPixelColor(i));
+          }
+        }
+      }
+
+      function draw() {
+        for (var a = 0; a < pixelAmount; ++a) {
+          for (var b = 0; b < pixelAmount; ++b) {
+            drawPixel(a * pixelSize, b * pixelSize);
+          }
+        }
+        updatePixels();
+      }
+
+      function keyPressed() {
+        if (key === 'a') {
+          redOn = !redOn;
+        } else if (key === 's') {
+          greenOn = !greenOn;
+        } else if (key === 'd') {
+          blueOn = !blueOn;
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+    <link rel="stylesheet" href="../css/simple.css" />
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <title>Gravity Game</title>
+  </head>
+  <body>
+    <div class="container px-lg-5 my-5">
+      <div class="row">
+        <div class="col">
+          <h1>Gravity Game</h1>
+          <p class="mb-5">Move left and right with A and D. Jump with W. Go down with S. Press B to turn into a bouncy ball and Q to stop moving entirely. I made this because I wanted to see if I could quickly replicate 2D physical behavior.</p>
+          <div id="canvas-container"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/p5.min.js"></script>
+    <script>
+      var canvasSize = 512;
+      var playerSize = 64;
+      var gravity = 0.01;
+
+      var playerx = canvasSize / 2 - playerSize / 2;
+      var playery = 0;
+      var playervx = 0;
+      var playervy = 0;
+      var playeray = gravity;
+      var playerax = 0;
+
+      var bouncy = false;
+      var spam = false;
+
+      function setup() {
+        var canv = createCanvas(canvasSize, canvasSize);
+        canv.parent("canvas-container");
+      }
+
+      function draw() {
+        background(color(34, 24, 110));
+        if (!bouncy) {
+          rect(playerx, playery, playerSize, playerSize);
+        } else {
+          circle(playerx + playerSize / 2, playery + playerSize / 2, playerSize);
+        }
+        
+        playervy += playeray * deltaTime;
+        playervx += playerax * deltaTime;
+        playery += playervy;
+        playerx += playervx;
+        
+        if (playery < 0) {
+          playery = 0;
+          playervy = bouncy ? -playervy : 0;
+        }
+        if (playery > canvasSize - playerSize) {
+          playery = canvasSize - playerSize;
+          playervy = bouncy ? -playervy : 0;
+        }
+        if (playerx < 0) {
+          playerx = 0;
+          playervx = bouncy ? -playervx : 0;
+        }
+        if (playerx > canvasSize - playerSize) {
+          playerx = canvasSize - playerSize;
+          playervx = bouncy ? -playervx : 0;
+        }
+        
+        if (spam) {
+          playervy = 3000;
+          playervx = 3000;
+        }
+      }
+
+      function keyPressed() {
+        if (key === 'a') {
+          playerax = -0.01;
+        }
+        if (key === 'd') {
+          playerax = 0.01;
+        }
+        if (key === ' ' || key === 'w') {
+          playervy = -8;
+        }
+        if (key === 's') {
+          playervy = 16;
+        }
+        if (key === 'q') {
+          playervx = 0;
+          playervy = 0;
+          playerax = 0;
+          playeray = gravity;
+        }
+        if (key === 'b') {
+          bouncy = !bouncy;
+        }
+        if (key === 'e') {
+          spam = true;
+        }
+      }
+
+      function keyReleased() {
+        if (key === 'a' || key === 'd') {
+          playerax = 0;
+        }
+        if (key === ' ' || key === 'w') {
+          playeray = gravity;
+        }
+        if (key === 'e') {
+          spam = false;
+        }
+      }
+    </script>
+  </body>
+</html>

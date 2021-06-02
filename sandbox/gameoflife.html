@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+    <link rel="stylesheet" href="../css/simple.css" />
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <title>Conway's Game of Life</title>
+  </head>
+  <body>
+    <div class="container px-lg-5 my-5">
+      <div class="row">
+        <div class="col">
+          <h1>Conway's Game of Life</h1>
+          <p class="mb-5">Click and drag to draw. Press A to step once, D to toggle stepping continuously, R to randomize the canvas, and C to clear the canvas. I made this on a whim after hearing about Conway's Game of Life in a YouTube video.</p>
+          <div id="canvas-container"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/p5.min.js"></script>
+    <script>
+      let pixelSize = 8;
+      let canvasSize = 16*32;
+      let newPixels = [];
+
+      let deadColor;
+      let aliveColor;
+
+      let aliveBoundMin = 2;
+      let aliveBoundMax = 3;
+      let deadBoundMin = 3;
+      let deadBoundMax = 3;
+
+      let going = false;
+      let drawing = false;
+
+      function setupNewPixels() {
+        deadColor = color(0);
+        aliveColor = color(220);
+        for (let i = 0; i < canvasSize / pixelSize; ++i) {
+          let row = [];
+          for (let j = 0; j < canvasSize / pixelSize; ++j) {
+            row.push(false);
+          }
+          newPixels.push(row);
+        }
+        noStroke();
+      }
+
+      function drawNewPixels() {
+        for (let i = 0; i < newPixels.length; ++i) {
+          for (let j = 0; j < newPixels[i].length; ++j) {
+            fill(newPixels[i][j] ? aliveColor : deadColor);
+            rect(
+              i * pixelSize, j * pixelSize,
+              (i + 1) * pixelSize, (j + 1) * pixelSize
+            );
+          }
+        }
+      }
+
+      function lifeStep() {
+        let org = newPixels.map(x => x.map(y => y));
+          
+        for (let i = 0; i < newPixels.length; ++i) {
+          for (let j = 0; j < newPixels[i].length; ++j) {
+            let aliveCount = 0;
+
+            let topLeft = newPixels?.[i - 1]?.[j - 1];
+            let topMiddle = newPixels?.[i - 1]?.[j];
+            let topRight = newPixels?.[i - 1]?.[j + 1];
+            let midLeft = newPixels[i]?.[j - 1];
+            let midRight = newPixels[i]?.[j + 1];
+            let botLeft = newPixels?.[i + 1]?.[j - 1];
+            let botMiddle = newPixels?.[i + 1]?.[j];
+            let botRight = newPixels?.[i + 1]?.[j + 1];
+
+            if (topLeft) aliveCount += topLeft;
+            if (topMiddle) aliveCount += topMiddle;
+            if (topRight) aliveCount += topRight;
+            if (midLeft) aliveCount += midLeft;
+            if (midRight) aliveCount += midRight;
+            if (botLeft) aliveCount += botLeft;
+            if (botMiddle) aliveCount += botMiddle;
+            if (botRight) aliveCount += botRight;
+
+            if (newPixels[i][j]) {
+              if (aliveCount < aliveBoundMin || aliveCount > aliveBoundMax) {
+                org[i][j] = false;
+              } else {
+                org[i][j] = true;
+              }
+            } else {
+              if (aliveCount < deadBoundMin || aliveCount > deadBoundMax) {
+                org[i][j] = false;
+              } else {
+                org[i][j] = true;
+              }
+            }
+          }
+        }
+
+        for (let i = 0; i < newPixels.length; ++i) {
+          for (let j = 0; j < newPixels[i].length; ++j) {
+            newPixels[i][j] = org[i][j];
+          }
+        }
+      }
+
+      function setup() {
+        let canv = createCanvas(canvasSize, canvasSize);
+        canv.parent("canvas-container");
+        setupNewPixels();
+        frameRate(15);
+      }
+
+      function draw() {
+        drawNewPixels();
+        if (going) {
+          lifeStep();
+        }
+        if (drawing) {
+          let predictX = ~~(mouseX / pixelSize);
+          let predictY = ~~(mouseY / pixelSize);
+            newPixels[predictX][predictY] = true;
+        }
+      }
+
+      function mousePressed() {
+        drawing = true;
+      }
+
+      function mouseReleased() {
+        drawing = false;
+      }
+
+      function keyPressed() {
+        if (key === 'a') {
+          lifeStep();
+        } else if (key === 'd') {
+          going = !going;
+        } else if (key === 'r') {
+          for (let i = 0; i < newPixels.length; ++i) {
+            for (let j = 0; j < newPixels[i].length; ++j) {
+              newPixels[i][j] = Math.random() < 0.333;
+            }
+          }
+        } else if (key === 'c') {
+          for (let i = 0; i < newPixels.length; ++i) {
+            for (let j = 0; j < newPixels[i].length; ++j) {
+              newPixels[i][j] = false;
+            }
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
